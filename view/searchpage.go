@@ -1,20 +1,20 @@
-package main
+package view
 
 import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
-// SearchPage 検索ページ
-type SearchPage struct {
-	*TweetsView
+// searchPage 検索ページ
+type searchPage struct {
+	*tweets
 	frame *tview.Frame
 	input *tview.InputField
 }
 
-func newSearchPage() *SearchPage {
-	sp := &SearchPage{
-		TweetsView: newTweetsView(),
+func newSearchPage() *searchPage {
+	sp := &searchPage{
+		tweets: newtweets(),
 		frame:  &tview.Frame{},
 		input:  &tview.InputField{},
 	}
@@ -36,6 +36,6 @@ func newSearchPage() *SearchPage {
 	return sp
 }
 
-func (sp *SearchPage) init() {
+func (sp *searchPage) init() {
 	sp.tweetsDraw()
 }

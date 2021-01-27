@@ -1,4 +1,4 @@
-package main
+package view
 
 import (
 	"fmt"
@@ -6,13 +6,13 @@ import (
 	"github.com/rivo/tview"
 )
 
-// StatusBar ステータスバー
-type StatusBar struct {
+// statusBar ステータスバー
+type statusBar struct {
 	textView *tview.TextView
 }
 
-func newStatusBar() *StatusBar {
-	sb := &StatusBar{
+func newStatusBar() *statusBar {
+	sb := &statusBar{
 		textView: &tview.TextView{},
 	}
 
@@ -25,7 +25,7 @@ func newStatusBar() *StatusBar {
 	return sb
 }
 
-func (sb *StatusBar) setStatus(msg, username, screenname string) {
+func (sb *statusBar) setStatus(msg, username, screenname string) {
 	sb.textView.Clear()
 	if msg != "" {
 		fmt.Fprintf(sb.textView, "[#9c9c9c]*%s*[white] ", msg)

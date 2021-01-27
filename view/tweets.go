@@ -1,4 +1,4 @@
-package main
+package view
 
 import (
 	"fmt"
@@ -8,14 +8,14 @@ import (
 	"github.com/rivo/tview"
 )
 
-// TweetsView ツイート
-type TweetsView struct {
+// tweets ツイート
+type tweets struct {
 	textView *tview.TextView
 	tweets   *[]anaconda.Tweet
 }
 
-func newTweetsView() *TweetsView {
-	tw := new(TweetsView)
+func newtweets() *tweets {
+	tw := new(tweets)
 
 	tw.textView = tview.NewTextView().
 		SetDynamicColors(true).
@@ -30,7 +30,7 @@ func newTweetsView() *TweetsView {
 	return tw
 }
 
-func (tw *TweetsView) tweetsDraw() {
+func (tw *tweets) tweetsDraw() {
 	for i := 0; i < 15; i++ {
 		text := fmt.Sprintf("[#ffffff]ユーザー名 [#9c9c9c](@screen_name)[#ce99de] 2021/01/01 00:00:00 [#e887b9]1fav\n")
 		text += fmt.Sprintf("[default]@hogehoge ツイート文ここ (%d)", i)
@@ -40,7 +40,7 @@ func (tw *TweetsView) tweetsDraw() {
 	tw.textView.Highlight("tweet_0")
 }
 
-func (tw *TweetsView) cursorUp() {
+func (tw *tweets) cursorUp() {
 	idx := getHighlightID(tw.textView)
 	if idx == -1 || tw.tweets == nil {
 		return
@@ -52,7 +52,7 @@ func (tw *TweetsView) cursorUp() {
 	tw.textView.Highlight(fmt.Sprintf("tweet_%d", idx))
 }
 
-func (tw *TweetsView) cursorDown() {
+func (tw *tweets) cursorDown() {
 	idx := getHighlightID(tw.textView)
 	if idx == -1 || tw.tweets == nil {
 		return

@@ -1,21 +1,21 @@
-package main
+package view
 
 import (
 	"github.com/rivo/tview"
 )
 
-// ListPage リストタイムライン
-type ListPage struct {
-	*TweetsView
+// listPage リストタイムライン
+type listPage struct {
+	*tweets
 	frame *tview.Frame
 	drop  *tview.DropDown
 }
 
-func newListPage() *ListPage {
-	lp := &ListPage{
-		TweetsView: newTweetsView(),
-		frame:      &tview.Frame{},
-		drop:       &tview.DropDown{},
+func newListPage() *listPage {
+	lp := &listPage{
+		tweets: newtweets(),
+		frame:  &tview.Frame{},
+		drop:   &tview.DropDown{},
 	}
 
 	lp.drop = tview.NewDropDown().SetLabel("📑  ")
@@ -31,11 +31,11 @@ func newListPage() *ListPage {
 	return lp
 }
 
-func (lp *ListPage) init() {
+func (lp *listPage) init() {
 	lp.tweetsDraw()
 	lp.setListName([]string{"LIST 1", "LIST 2"})
 }
 
-func (lp *ListPage) setListName(listname []string) {
+func (lp *listPage) setListName(listname []string) {
 	lp.drop.SetOptions(listname, nil).SetCurrentOption(0)
 }

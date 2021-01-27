@@ -1,17 +1,17 @@
-package main
+package view
 
 import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
-// InputBar 入力バー
-type InputBar struct {
+// inputBar 入力バー
+type inputBar struct {
 	inputField *tview.InputField
 }
 
-func newInputBar() *InputBar {
-	ib := &InputBar{
+func newInputBar() *inputBar {
+	ib := &inputBar{
 		inputField: &tview.InputField{},
 	}
 

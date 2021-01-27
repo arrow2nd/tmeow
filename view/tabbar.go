@@ -1,4 +1,4 @@
-package main
+package view
 
 import (
 	"fmt"
@@ -6,13 +6,13 @@ import (
 	"github.com/rivo/tview"
 )
 
-// TabBar タブバー
-type TabBar struct {
+// tabBar タブバー
+type tabBar struct {
 	textView *tview.TextView
 }
 
-func newTabBar(pg *tview.Pages) *TabBar {
-	tb := &TabBar{
+func newTabBar(pg *tview.Pages) *tabBar {
+	tb := &tabBar{
 		textView: &tview.TextView{},
 	}
 
@@ -28,7 +28,7 @@ func newTabBar(pg *tview.Pages) *TabBar {
 	return tb
 }
 
-func (tb *TabBar) setTab(tabname []string) {
+func (tb *tabBar) setTab(tabname []string) {
 	for i, name := range tabname {
 		fmt.Fprintf(tb.textView, `["page_%d"][darkcyan] %s [white][""]`, i, name)
 	}
@@ -36,7 +36,7 @@ func (tb *TabBar) setTab(tabname []string) {
 	tb.textView.Highlight("page_0")
 }
 
-func (tb *TabBar) cursorLeft(pg *tview.Pages) {
+func (tb *tabBar) cursorLeft(pg *tview.Pages) {
 	idx := getHighlightID(tb.textView)
 	pageCount := pg.GetPageCount()
 	if idx--; idx < 0 {
@@ -45,7 +45,7 @@ func (tb *TabBar) cursorLeft(pg *tview.Pages) {
 	tb.textView.Highlight(fmt.Sprintf("page_%d", idx))
 }
 
-func (tb *TabBar) cursorRight(pg *tview.Pages) {
+func (tb *tabBar) cursorRight(pg *tview.Pages) {
 	idx := getHighlightID(tb.textView)
 	pageCount := pg.GetPageCount()
 	idx = (idx + 1) % pageCount

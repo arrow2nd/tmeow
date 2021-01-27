@@ -1,24 +1,29 @@
-package main
+package view
 
 import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
-// View 画面パーツ
+// View 画面
 type View struct {
 	pages       *tview.Pages
-	homePage    *HomePage
-	mentionPage *MentionPage
-	listPage    *ListPage
-	searchPage  *SearchPage
-	userPage    *UserPage
-	tabBar      *TabBar
-	statusBar   *StatusBar
-	inputBar    *InputBar
+	homePage    *homePage
+	mentionPage *mentionPage
+	listPage    *listPage
+	searchPage  *searchPage
+	userPage    *userPage
+	tabBar      *tabBar
+	statusBar   *statusBar
+	inputBar    *inputBar
 }
 
-func newView() *View {
+// NewView 画面を作成
+func NewView() *View {
+	// 配色設定
+	tview.Styles.PrimitiveBackgroundColor = tcell.ColorDefault
+	tview.Styles.ContrastBackgroundColor = tcell.ColorDefault
+
 	view := &View{
 		pages:       tview.NewPages(),
 		homePage:    newHomePage(),
@@ -26,7 +31,7 @@ func newView() *View {
 		listPage:    newListPage(),
 		searchPage:  newSearchPage(),
 		userPage:    newUserPage(),
-		tabBar:      &TabBar{},
+		tabBar:      &tabBar{},
 		statusBar:   newStatusBar(),
 		inputBar:    newInputBar(),
 	}
@@ -51,7 +56,14 @@ func newView() *View {
 		AddItem(view.inputBar.inputField, 1, 1, false)
 
 	// ルートプリミティブに設定
-	app.SetRoot(layout, true)
+	SharedConfig.App.SetRoot(layout, true)
+
+	// オプション設定
+	SharedConfig.App.EnableMouse(true).
+		SetBeforeDrawFunc(func(screen tcell.Screen) bool {
+			screen.Clear()
+			return false
+		})
 
 	return view
 }
@@ -70,7 +82,7 @@ func (view *View) Init() {
 }
 
 func (view *View) setInputCapture() {
-	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+	SharedConfig.App.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyLeft:
 			// 左のタブへ
@@ -84,12 +96,12 @@ func (view *View) setInputCapture() {
 
 		case tcell.KeyCtrlI:
 			// フォーカスを入力欄へ
-			app.SetFocus(view.inputBar.inputField)
+			SharedConfig.App.SetFocus(view.inputBar.inputField)
 			return nil
 
 		case tcell.KeyEscape:
 			// フォーカスをページへ
-			app.SetFocus(view.pages)
+			SharedConfig.App.SetFocus(view.pages)
 			return nil
 		}
 		return event
