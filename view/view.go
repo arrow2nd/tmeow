@@ -70,18 +70,24 @@ func NewView() *View {
 
 // Init 初期化
 func (view *View) Init() {
-	// キーイベントハンドラ設定
-	view.setInputCapture()
-
 	// 各ページ初期化
 	view.homePage.init()
 	view.mentionPage.init()
 	view.listPage.init()
 	view.searchPage.init()
 	view.userPage.init()
+	view.statusBar.init()
+
+	// キーイベント登録
+	view.setCommonKeyEvent()
+	view.setHomePageKeyEvent()
+	view.setMentionPageKeyEvent()
+	view.setListPageKeyEvent()
+	view.setSearchPageKeyEvent()
+	view.setUserPageKeyEvent()
 }
 
-func (view *View) setInputCapture() {
+func (view *View) setCommonKeyEvent() {
 	SharedConfig.App.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyLeft:
@@ -106,4 +112,65 @@ func (view *View) setInputCapture() {
 		}
 		return event
 	})
+}
+
+func (view *View) setHomePageKeyEvent() {
+	view.homePage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		switch event.Key() {
+		}
+		event = view.tweetsKeyEvent(view.homePage.tweets, event)
+		return event
+	})
+}
+
+func (view *View) setMentionPageKeyEvent() {
+	view.mentionPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		switch event.Key() {
+		}
+		return event
+	})
+}
+
+func (view *View) setListPageKeyEvent() {
+	view.listPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		switch event.Key() {
+		case tcell.KeyCtrlL:
+			SharedConfig.App.SetFocus(view.listPage.drop)
+			return nil
+		}
+		return event
+	})
+}
+
+func (view *View) setSearchPageKeyEvent() {
+	view.searchPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		switch event.Key() {
+		case tcell.KeyCtrlS:
+			SharedConfig.App.SetFocus(view.searchPage.input)
+			return nil
+		}
+		return event
+	})
+}
+
+func (view *View) setUserPageKeyEvent() {
+	view.userPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		switch event.Key() {
+		}
+		return event
+	})
+}
+
+func (view *View) tweetsKeyEvent(tw *tweets, event *tcell.EventKey) *tcell.EventKey {
+	switch event.Key() {
+	case tcell.KeyUp:
+		// カーソル 上
+		tw.cursorUp()
+		return nil
+	case tcell.KeyDown:
+		// カーソル 下
+		tw.cursorDown()
+		return nil
+	}
+	return event
 }
