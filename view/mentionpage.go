@@ -4,8 +4,8 @@ import "github.com/rivo/tview"
 
 // mentionPage メンションタイムライン
 type mentionPage struct {
-	*tweets
-	frame *tview.Frame
+	tweets *tweets
+	frame  *tview.Frame
 }
 
 func newMentionPage() *mentionPage {
@@ -14,12 +14,12 @@ func newMentionPage() *mentionPage {
 		frame:  &tview.Frame{},
 	}
 
-	mp.frame = tview.NewFrame(mp.textView).
+	mp.frame = tview.NewFrame(mp.tweets.textView).
 		SetBorders(0, 0, 0, 0, 1, 1)
 
 	return mp
 }
 
 func (mp *mentionPage) init() {
-	mp.tweetsDraw()
+	mp.tweets.draw()
 }

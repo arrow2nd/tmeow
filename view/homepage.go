@@ -6,8 +6,8 @@ import (
 
 // homePage ホームタイムライン
 type homePage struct {
-	*tweets
-	frame *tview.Frame
+	tweets *tweets
+	frame  *tview.Frame
 }
 
 func newHomePage() *homePage {
@@ -16,12 +16,12 @@ func newHomePage() *homePage {
 		frame:  &tview.Frame{},
 	}
 
-	home.frame = tview.NewFrame(home.textView).
+	home.frame = tview.NewFrame(home.tweets.textView).
 		SetBorders(0, 0, 0, 0, 1, 1)
 
 	return &home
 }
 
 func (hp *homePage) init() {
-	hp.tweetsDraw()
+	hp.tweets.draw()
 }

@@ -6,9 +6,9 @@ import (
 
 // listPage リストタイムライン
 type listPage struct {
-	*tweets
-	frame *tview.Frame
-	drop  *tview.DropDown
+	tweets *tweets
+	frame  *tview.Frame
+	drop   *tview.DropDown
 }
 
 func newListPage() *listPage {
@@ -24,7 +24,7 @@ func newListPage() *listPage {
 		SetDirection(tview.FlexRow).
 		AddItem(lp.drop, 1, 1, false).
 		AddItem(nil, 1, 1, false).
-		AddItem(lp.textView, 0, 1, true)
+		AddItem(lp.tweets.textView, 0, 1, true)
 
 	lp.frame = tview.NewFrame(flex).SetBorders(0, 0, 0, 0, 1, 1)
 
@@ -32,7 +32,7 @@ func newListPage() *listPage {
 }
 
 func (lp *listPage) init() {
-	lp.tweetsDraw()
+	lp.tweets.draw()
 	lp.setListName([]string{"LIST 1", "LIST 2"})
 }
 

@@ -9,7 +9,7 @@ import (
 
 // userPage ユーザータイムライン
 type userPage struct {
-	*tweets
+	tweets         *tweets
 	frame          *tview.Frame
 	userInfo       *tview.TextView
 	tweetsCount    *tview.TextView
@@ -47,7 +47,7 @@ func newUserPage() *userPage {
 		AddItem(up.userInfo, 4, 1, false).
 		AddItem(userCountsView, 1, 1, false).
 		AddItem(nil, 1, 1, false).
-		AddItem(up.textView, 0, 1, true)
+		AddItem(up.tweets.textView, 0, 1, true)
 
 	up.frame = tview.NewFrame(flex).
 		SetBorders(0, 0, 0, 0, 1, 1)
@@ -56,7 +56,7 @@ func newUserPage() *userPage {
 }
 
 func (up *userPage) init() {
-	up.tweetsDraw()
+	up.tweets.draw()
 	up.setUserInfo("ユーザー名", "screen_name", "[blue]フォローされています", "BIO", "place")
 	up.setUserCounts("10000", "10000", "10000")
 }

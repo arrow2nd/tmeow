@@ -8,12 +8,16 @@ import (
 
 // statusBar ステータスバー
 type statusBar struct {
-	textView *tview.TextView
+	textView   *tview.TextView
+	username   string
+	screenname string
 }
 
 func newStatusBar() *statusBar {
 	sb := &statusBar{
-		textView: &tview.TextView{},
+		textView:   &tview.TextView{},
+		username:   "",
+		screenname: "",
 	}
 
 	sb.textView = tview.NewTextView().
@@ -25,10 +29,13 @@ func newStatusBar() *statusBar {
 	return sb
 }
 
-func (sb *statusBar) setStatus(msg, username, screenname string) {
+func (sb *statusBar) init() {
+	sb.username = "ユーザー名"
+	sb.screenname = "screen_name"
+	sb.setStatus("25件のツイートを読み込みました")
+}
+
+func (sb *statusBar) setStatus(msg string) {
 	sb.textView.Clear()
-	if msg != "" {
-		fmt.Fprintf(sb.textView, "[#9c9c9c]*%s*[white] ", msg)
-	}
-	fmt.Fprintf(sb.textView, "[#9c9c9c][%s / @%s][white] ", username, screenname)
+	fmt.Fprintf(sb.textView, "[grey]%s[white] [#9c9c9c][%s / @%s][white] ", msg, sb.username, sb.screenname)
 }

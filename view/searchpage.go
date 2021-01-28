@@ -7,9 +7,9 @@ import (
 
 // searchPage 検索ページ
 type searchPage struct {
-	*tweets
-	frame *tview.Frame
-	input *tview.InputField
+	tweets *tweets
+	frame  *tview.Frame
+	input  *tview.InputField
 }
 
 func newSearchPage() *searchPage {
@@ -28,7 +28,7 @@ func newSearchPage() *searchPage {
 		SetDirection(tview.FlexRow).
 		AddItem(sp.input, 1, 1, false).
 		AddItem(nil, 1, 1, false).
-		AddItem(sp.textView, 0, 1, true)
+		AddItem(sp.tweets.textView, 0, 1, true)
 
 	sp.frame = tview.NewFrame(flex).
 		SetBorders(0, 0, 0, 0, 1, 1)
@@ -37,5 +37,5 @@ func newSearchPage() *searchPage {
 }
 
 func (sp *searchPage) init() {
-	sp.tweetsDraw()
+	sp.tweets.draw()
 }
