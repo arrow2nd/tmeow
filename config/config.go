@@ -1,12 +1,5 @@
 package config
 
-import (
-	"fmt"
-	"log"
-
-	"github.com/ChimeraCoder/anaconda"
-)
-
 const (
 	crdFile = ".cred.yaml"
 	optFile = "option.yaml"
@@ -83,38 +76,7 @@ func NewConfig() *Config {
 			Mute:         0xe5C07b,
 		},
 	}
-
-	cfg.Load()
-
 	return cfg
-}
-
-// auth 認証
-func (cfg *Config) auth() {
-	authAPI := anaconda.NewTwitterApi("", "")
-	uri, cred, err := authAPI.AuthorizationURL("oob")
-	if err != nil {
-		fmt.Println("認証URLの発行に失敗しました")
-		log.Fatal(err)
-	}
-
-	// 認証ページをブラウザで開く
-	fmt.Println("以下のURLにアクセスしてアプリケーションを認証し、表示されるPINを入力してください。")
-	fmt.Printf("URL : %s\n\n", uri)
-
-	// PIN入力
-	pin := ""
-	fmt.Println("PIN : ")
-	fmt.Scanf("%s", &pin)
-
-	// トークン発行
-	cred, _, err = authAPI.GetCredentials(cred, pin)
-	if err != nil {
-		fmt.Println("アクセストークンが取得できませんでした")
-		log.Fatal(err)
-	}
-
-	cfg.Cred.Token, cfg.Cred.Secret = cred.Token, cred.Secret
 }
 
 // Save 保存
@@ -125,12 +87,12 @@ func (cfg *Config) Save() {
 }
 
 // Load 読込
-func (cfg *Config) Load() {
+func (cfg *Config) Load() bool {
 	if !configFileExists(cfg.Option.ConfigDir) {
-		cfg.auth()
-		cfg.Save()
+		return false
 	}
 	loadYaml(cfg.Option.ConfigDir, crdFile, cfg.Cred)
 	loadYaml(cfg.Option.ConfigDir, optFile, cfg.Option)
 	loadYaml(cfg.Option.ConfigDir, colFile, cfg.Color)
+	return true
 }
