@@ -12,5 +12,7 @@ require (
 	github.com/gdamore/tcell/v2 v2.1.0
 	github.com/rivo/tview v0.0.0-20210117162420-745e4ceeb711
 	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect
+	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect
+	gopkg.in/yaml.v2 v2.4.0
 )
