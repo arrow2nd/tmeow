@@ -56,10 +56,10 @@ func NewView() *View {
 		AddItem(view.inputBar.inputField, 1, 1, false)
 
 	// ルートプリミティブに設定
-	SharedConfig.App.SetRoot(layout, true)
+	sc.App.SetRoot(layout, true)
 
 	// オプション設定
-	SharedConfig.App.EnableMouse(true).
+	sc.App.EnableMouse(true).
 		SetBeforeDrawFunc(func(screen tcell.Screen) bool {
 			screen.Clear()
 			return false
@@ -88,7 +88,7 @@ func (view *View) Init() {
 }
 
 func (view *View) setCommonKeyEvent() {
-	SharedConfig.App.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+	sc.App.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyLeft:
 			// 左のタブへ
@@ -102,12 +102,12 @@ func (view *View) setCommonKeyEvent() {
 
 		case tcell.KeyCtrlI:
 			// フォーカスを入力欄へ
-			SharedConfig.App.SetFocus(view.inputBar.inputField)
+			sc.App.SetFocus(view.inputBar.inputField)
 			return nil
 
 		case tcell.KeyEscape:
 			// フォーカスをページへ
-			SharedConfig.App.SetFocus(view.pages)
+			sc.App.SetFocus(view.pages)
 			return nil
 		}
 		return event
@@ -135,7 +135,7 @@ func (view *View) setListPageKeyEvent() {
 	view.listPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyCtrlL:
-			SharedConfig.App.SetFocus(view.listPage.drop)
+			sc.App.SetFocus(view.listPage.drop)
 			return nil
 		}
 		return event
@@ -146,7 +146,7 @@ func (view *View) setSearchPageKeyEvent() {
 	view.searchPage.frame.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyCtrlS:
-			SharedConfig.App.SetFocus(view.searchPage.input)
+			sc.App.SetFocus(view.searchPage.input)
 			return nil
 		}
 		return event

@@ -73,7 +73,7 @@ func (tw *TwitterAPI) GetTimeline(mode string, v url.Values) (*[]anaconda.Tweet,
 
 // GetListTimeline リストタイムラインを取得
 func (tw *TwitterAPI) GetListTimeline(listID int64, count string) (*[]anaconda.Tweet, error) {
-	v := createURLValues(count)
+	v := CreateURLValues(count)
 
 	timeline, err := tw.API.GetListTweets(listID, true, v)
 	if err != nil {
@@ -85,7 +85,7 @@ func (tw *TwitterAPI) GetListTimeline(listID int64, count string) (*[]anaconda.T
 
 // GetSearchResult 検索結果を取得
 func (tw *TwitterAPI) GetSearchResult(query, count string) (*[]anaconda.Tweet, error) {
-	v := createURLValues(count)
+	v := CreateURLValues(count)
 	query += " -filter:retweets"
 
 	result, err := tw.API.GetSearch(query, v)

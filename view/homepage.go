@@ -1,6 +1,7 @@
 package view
 
 import (
+	"github.com/arrow2nd/tmeow/api"
 	"github.com/rivo/tview"
 )
 
@@ -23,5 +24,15 @@ func newHomePage() *homePage {
 }
 
 func (hp *homePage) init() {
+	hp.load()
 	hp.tweets.draw()
+}
+
+func (hp *homePage) load() {
+	v := api.CreateURLValues(sc.Cfg.Option.Counts)
+	tweets, err := sc.Twitter.GetTimeline("home", v)
+	if err != nil {
+		return
+	}
+	hp.tweets.add(tweets)
 }

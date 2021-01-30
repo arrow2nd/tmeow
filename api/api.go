@@ -19,8 +19,8 @@ Y88b.  888  888  888 Y8b.     Y88..88P Y88b 888 d88P
 `
 
 const (
-	consumerKey    = "MTSe5vV5KjtyCKAEKwgvBuxUV"
-	consumerSecret = "GRUBtJhmdSqOpcP4pKN9ZDUMwgxU22NyB5CvU7T63TViUvCFdG"
+	consumerKey    = "xxxxx"
+	consumerSecret = "xxxxx"
 )
 
 // TwitterAPI API構造体
@@ -70,7 +70,6 @@ func (tw *TwitterAPI) Init(token, secret string) error {
 
 // Auth 認証
 func (tw *TwitterAPI) Auth() (string, string) {
-
 	authAPI := anaconda.NewTwitterApi("", "")
 	uri, cred, err := authAPI.AuthorizationURL("oob")
 	if err != nil {

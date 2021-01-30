@@ -24,9 +24,7 @@ func main() {
 	app := tview.NewApplication()
 
 	// 画面作成
-	view.SharedConfig.App = app
-	view.SharedConfig.API = api.API
-	view.SharedConfig.Cfg = cfg
+	view.SetSharedConfig(app, api, cfg)
 	view := view.NewView()
 	view.Init()
 

@@ -33,7 +33,7 @@ func newListPage() *listPage {
 
 func (lp *listPage) init() {
 	lp.tweets.draw()
-	lp.setListName([]string{"LIST 1", "LIST 2"})
+	lp.setListName(sc.Twitter.ListNames)
 }
 
 func (lp *listPage) setListName(listname []string) {
